@@ -12,3 +12,12 @@ Cick here to download the dataset.
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us.
 
+# Example Usages
+We propose the following usages which are relevant to developing a wearable assistive technology for the blind and low vision people:
+- developing of wearable assistive tool that detects surface discontinuity in near real-time
+- including of SurDis into other datasets that have various urban objects to train a more diverse object detection model targeting urban navigation
+- utilizing of the depth map to extract distance information that can be supplied via the feedback mechanism of an assistive tool for blind navigation
+- designing of evaluation system that rates the level of hazard for each class or each instance of surface discontinuity, this can become a hazard alert mechanism for an assistive tool in blind navigation
+
+# Recommended Practice for Object Detection Model 
+Since we annotated the surface discontinuities with tight bounding boxes, it is reccommended that when you are training your model using this dataset, you may slightly expand the bounding boxes (i.e. add a few units of pixel to all edges). This extra information might help your models to better recognize the objects when background pixels around the borders are included. 
