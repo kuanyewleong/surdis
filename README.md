@@ -9,6 +9,8 @@ Most of the publicly available datasets that can be applied for blind navigation
 # Dataset Description
 These samples of surface condition of some pathways were collected from 10 different locations within Malaysia. The sampling method employed was a judgmental sampling, which is a non-probability method based on judgement that certain areas could have more samples as compared to others. Data were collected during sunny days under direct sunlight or indirect sunlight based on the locations. The recording tasks were performed under natural (uncontrolled) environment hence some data might contain anonymized passers-by or vehicles.
 
+![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_2.png "sample")
+
 # Download
 Cick here to download the depth maps or the bitmap stereo images of this dataset. 
 
