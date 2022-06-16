@@ -4,7 +4,7 @@ The Surface Discontinuity Dataset contains over 200 sets of depth maps and their
 
 Most of the publicly available datasets that can be applied for blind navigation have predominantly focused on solving the problem of obstacles detection (either static objects such as lamp posts and traffic signs, or dynamic objects such as vehicles and pedestrians) above the surface of a pathway. However, there is very limited research done for blind navigation in negotiating surface discontinuity at outdoor urban areas, let alone publicly available dataset that tailored for such research. Even if such datasets are available, they might not be suitable for local usages as each country has its unique built environment and standards. Additionally, most visual based technologies in recent years have focused on the mentioned issues of objects detection, or a more global problem of wayfinding. Taking into account these gaps, we present SurDis - the Surface Discontinuity Dataset of urban areas in Malaysia.
 
-![alt text](https://github.com/kuanyewleong/surdis/fig1_1.png "sample")
+![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_1.png "sample")
 
 # Dataset Description
 These samples of surface condition of some pathways were collected from 10 different locations within Malaysia. The sampling method employed was a judgmental sampling, which is a non-probability method based on judgement that certain areas could have more samples as compared to others. Data were collected during sunny days under direct sunlight or indirect sunlight based on the locations. The recording tasks were performed under natural (uncontrolled) environment hence some data might contain anonymized passers-by or vehicles.
