@@ -14,8 +14,11 @@ The sampling method employed was a judgmental sampling, which is a non-probabili
 In the following figure are some examples of surface discontinuity. Hazardous conditions are indicated by the red arrows, counterclockwise: partially covered drainage next to some steps that connect the walkway, uncovered drainage between a steps connecting the road and the aisle, high altitude drop-off leading to uncovered drainage at the edge of walkway, uncovered drainage between a ramp and some steps, drop-off along the edge of a walkway without railing, and blended gradients between a ramp and steps.
 ![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_2.png "sample")
 
+# Data Class Label
+Based on the physical attributes of the collected data, there are 5 distinctive classes of surface discontinuity: (1) down-steps, (2) up-steps, (3) uncovered drainage, (4) drop-off without handrail, and (5) mixed gradient. 
+
 # Dataset Download Link and File Structure
-Click here to download the dataset. 
+Click here to download the dataset: https://1drv.ms/u/s!AkMf6DxiFnMnvQCWjMMow4hks5Py?e=VAzQCe
 
 After decompressing the downloaded folder from the above link, the structure of the dataset will be:
 ```
@@ -24,13 +27,19 @@ After decompressing the downloaded folder from the above link, the structure of 
     ├── annotation_files/
     │   ├── PASCAL_VOC
     │   └── COCO_JSON
-    ├── depth_maps
+    ├── depth_maps/
+    │   ├── trainset
+    │   └── testset
     └── bitmap_stereo_images/
-        └── trainset/
+        ├── trainset/
+        │   ├── left-image-folder
+        │   └── right-image-folder
+        └── testset/
             ├── left-image-folder
             └── right-image-folder
  
  ```
+For simplicity of usage, we made all the annotation of bounding boxes based on the file path of left images. If you are training with depth maps, you can change the file path to point to the .npy files in the "$Data_root/depth_maps/trainset" directory.
 
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us.
