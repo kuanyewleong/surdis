@@ -14,8 +14,23 @@ The sampling method employed was a judgmental sampling, which is a non-probabili
 In the following figure are some examples of surface discontinuity. Hazardous conditions are indicated by the red arrows, counterclockwise: partially covered drainage next to some steps that connect the walkway, uncovered drainage between a steps connecting the road and the aisle, high altitude drop-off leading to uncovered drainage at the edge of walkway, uncovered drainage between a ramp and some steps, drop-off along the edge of a walkway without railing, and blended gradients between a ramp and steps.
 ![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_2.png "sample")
 
-# Download
-Cick here to download the depth maps or the bitmap stereo images of this dataset. 
+# Dataset Download Link and File Structure
+Click here to download the dataset. 
+
+After decompressing the downloaded folder from the above link, the structure of the dataset will be:
+```
+.
+└── $Data_root/
+    ├── annotation_files/
+    │   ├── PASCAL_VOC
+    │   └── COCO_JSON
+    ├── depth_maps
+    └── bitmap_stereo_images/
+        └── trainset/
+            ├── left-image-folder
+            └── right-image-folder
+ 
+ ```
 
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us.
