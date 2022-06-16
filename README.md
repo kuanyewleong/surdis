@@ -7,8 +7,11 @@ Most of the publicly available datasets that can be applied for blind navigation
 ![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_1.png "sample")
 
 # Dataset Description
-These samples of surface condition of some pathways were collected from 10 different locations within Malaysia. The sampling method employed was a judgmental sampling, which is a non-probability method based on judgement that certain areas could have more samples as compared to others. Data were collected during sunny days under direct sunlight or indirect sunlight based on the locations. The recording tasks were performed under natural (uncontrolled) environment hence some data might contain anonymized passers-by or vehicles.
+These samples of surface condition of some pathways were collected from 10 different locations within Malaysia. SurDis has 200 sets of depth map sequences with annotation of various surface discontinuities from 10 selected locations, captured in video recording mode by a person mimicking the walking style of a typical BLV individual. Each sequence set contains about 100 to 150 depth maps, and we generated a total of 17302 such depth maps. We also provide the original stereo image sequences corresponding to the depth maps.
 
+The sampling method employed was a judgmental sampling, which is a non-probability method based on judgement that certain areas could have more samples as compared to others. Data were collected during sunny days under direct sunlight or indirect sunlight based on the locations. The recording tasks were performed under natural (uncontrolled) environment hence some data might contain anonymized passers-by or vehicles.
+
+In the following figure are some examples of surface discontinuity. Hazardous conditions are indicated by the red arrows, counterclockwise: partially covered drainage next to some steps that connect the walkway, uncovered drainage between a steps connecting the road and the aisle, high altitude drop-off leading to uncovered drainage at the edge of walkway, uncovered drainage between a ramp and some steps, drop-off along the edge of a walkway without railing, and blended gradients between a ramp and steps.
 ![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_2.png "sample")
 
 # Download
