@@ -42,11 +42,7 @@ After decompressing the downloaded folder from the above link, the structure of 
 For simplicity of usage, we made all the annotation of bounding boxes based on the file path of left images. If you are training with depth maps, you can change the file path to point to the .npy files in the "$Data_root/depth_maps/trainset" directory.
 
 ### Files and Naming Convention
-For the depth map i.e. a file in 
-> depth_maps/trainset/depth_1/map_113.npy 
-will have its corresponding stereo image pair in 
-> bitmap_stereo_images/trainset/left-image-folder/left_1/l_img_113.bmp and 
-> bitmap_stereo_images/trainset/right-image-folder/right_1/r_img_113.bmp
+For the depth map i.e. a file in ***depth_maps/trainset/depth_1/map_113.npy*** is generated from stereo image pair in ***bitmap_stereo_images/trainset/left-image-folder/left_1/l_img_113.bmp*** and ***bitmap_stereo_images/trainset/right-image-folder/right_1/r_img_113.bmp***.
 
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us.
