@@ -7,7 +7,7 @@ Most of the publicly available datasets that can be applied for blind navigation
 ![alt text](https://github.com/kuanyewleong/surdis/blob/main/fig1_1.png "sample")
 
 # Dataset Description
-These samples of surface condition of some pathways were collected from 10 different locations within Malaysia. SurDis has 200 sets of depth map sequences with annotation of various surface discontinuities from 10 selected locations, captured in video recording mode by a person mimicking the walking style of a typical BLV individual. Each sequence set contains about 100 to 150 depth maps, and we generated a total of 17302 such depth maps. We also provide the original stereo image sequences corresponding to the depth maps.
+These samples of surface condition of some pathways were collected from 10 different locations within Malaysia. SurDis has 200 sets of depth map sequences with annotation of various surface discontinuities from 10 selected locations, captured in video recording mode by a person mimicking the walking style of a typical BLV individual. Each sequence set contains about 100 to 150 depth maps, and we generated a total of 17302 such depth maps. We also provide the original stereo image sequences corresponding to the depth maps. The generated depth maps are stored as numpy arrays (in .npy format). The stereo images are stored as monochromatic bitmap format.
 
 The sampling method employed was a judgmental sampling, which is a non-probability method based on judgement that certain areas could have more samples as compared to others. Data were collected during sunny days under direct sunlight or indirect sunlight based on the locations. The recording tasks were performed under natural (uncontrolled) environment hence some data might contain anonymized passers-by or vehicles.
 
@@ -40,6 +40,13 @@ After decompressing the downloaded folder from the above link, the structure of 
  
  ```
 For simplicity of usage, we made all the annotation of bounding boxes based on the file path of left images. If you are training with depth maps, you can change the file path to point to the .npy files in the "$Data_root/depth_maps/trainset" directory.
+
+### Files and Naming Convention
+For the depth map i.e. a file in 
+> depth_maps/trainset/depth_1/map_113.npy 
+will have its corresponding stereo image pair in 
+> bitmap_stereo_images/trainset/left-image-folder/left_1/l_img_113.bmp and 
+> bitmap_stereo_images/trainset/right-image-folder/right_1/r_img_113.bmp
 
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us.
