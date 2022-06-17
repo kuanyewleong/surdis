@@ -1,5 +1,5 @@
 # SurDis: A Surface Discontinuity Dataset for Wearable Technology to Assist Blind Navigation in Urban Environments
-## (Under Review at NeurIPS 2022 Datasets and Benchmarks Track)
+### (Under Review at NeurIPS 2022 Datasets and Benchmarks Track)
 The Surface Discontinuity Dataset contains over 200 sets of depth maps and their corresponding stereo image sequences (in bitmap file format to preserve their best resolution) of surface discontinuity along the walkway within Malaysia urbans, captured by our stereo vision prototype for a research study concerning navigation for the blind and low vision people.
 
 Most of the publicly available datasets that can be applied for blind navigation have predominantly focused on solving the problem of obstacles detection (either static objects such as lamp posts and traffic signs, or dynamic objects such as vehicles and pedestrians) above the surface of a pathway. However, there is very limited research done for blind navigation in negotiating surface discontinuity at outdoor urban areas, let alone publicly available dataset that tailored for such research. Even if such datasets are available, they might not be suitable for local usages as each country has its unique built environment and standards. Additionally, most visual based technologies in recent years have focused on the mentioned issues of objects detection, or a more global problem of wayfinding. Taking into account these gaps, we present SurDis - the Surface Discontinuity Dataset of urban areas in Malaysia.
@@ -45,6 +45,8 @@ For simplicity of usage, we made all the annotation of bounding boxes based on t
 Depth maps in "depth_maps/trainset/depth_x" are generated from image pairs in "bitmap_stereo_images/trainset/left-image-folder/left_x" and "bitmap_stereo_images/trainset/right-image-folder/right_x".
 
 For example, a depth map file in *depth_maps/trainset/depth_1/map_113.npy* is generated from stereo image pair in *bitmap_stereo_images/trainset/left-image-folder/left_1/l_img_113.bmp* and *bitmap_stereo_images/trainset/right-image-folder/right_1/r_img_113.bmp*.
+
+Please refer the example data in repository [example_data](https://github.com/kuanyewleong/surdis/tree/main/example_data) for better understanding. 
 
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us.
