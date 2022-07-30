@@ -19,6 +19,7 @@ Based on the physical attributes of the collected data, there are 5 distinctive 
 
 # Dataset Download Link and File Structure
 Click here to download the dataset: [SurDis](https://1drv.ms/u/s!AkMf6DxiFnMnvQCWjMMow4hks5Py?e=VAzQCe).
+(Please note that we need to anonymize some of the raw images before release the dataset to a site that has DOI i.e. Zenodo, thus the current location at this shared drive is a temporary solution. We will make sure the full dataset is publicly ready before the actual conference date.)
 
 After decompressing the downloaded folder from the above link, the structure of the dataset will be:
 ```
