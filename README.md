@@ -59,5 +59,3 @@ We propose the following usages which are relevant to developing a wearable assi
 - utilizing of the depth map to extract distance information that can be supplied via the feedback mechanism of an assistive tool for blind navigation
 - designing of evaluation system that rates the level of hazard for each class or each instance of surface discontinuity, this can become a hazard alert mechanism for an assistive tool in blind navigation
 
-# Recommended Practice for Object Detection Model 
-As a measure to control the quality of our annotation, we annotated the surface discontinuities with tight bounding boxes. Thus, it is reccommended that when you are training your model using this dataset, you may slightly expand the bounding boxes (i.e. add a few units of pixel to all edges). This extra context might help your models to better recognize the objects when background pixels around the borders are included. 
