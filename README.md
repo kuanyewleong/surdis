@@ -52,7 +52,7 @@ Please refer the example data in repository [example_data](https://github.com/ku
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us. Refer [this document](https://github.com/kuanyewleong/surdis/blob/main/License.md) for the license.
 
-# Example Usages
+# Potential Usages
 We propose the following usages which are relevant to developing a wearable assistive technology for the blind and low vision people:
 - developing of wearable assistive tool that detects surface discontinuity in near real-time
 - including of SurDis into other datasets that have various urban objects to train a more diverse object detection model targeting urban navigation
