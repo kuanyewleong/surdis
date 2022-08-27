@@ -59,14 +59,8 @@ We propose the following usages which are relevant to developing a wearable assi
 - utilizing of the depth map to extract distance information that can be supplied via the feedback mechanism of an assistive tool for blind navigation
 - designing of evaluation system that rates the level of hazard for each class or each instance of surface discontinuity, this can become a hazard alert mechanism for an assistive tool in blind navigation
 
-# Loading Data and Training Models
-# Object Detection Using Resnet18
-
-
-# Instructions
-
-1. You have to use only this notebook for all your code.
-
+# Tutorial of Loading Data and Training Models
+### (this is bassed on Resnet-18 for simplicity, you may experiment with other models)
 
 ```python
 from __future__ import division, print_function, unicode_literals
@@ -78,8 +72,6 @@ from torch.autograd import Variable
 import matplotlib.pyplot as plt
 %matplotlib inline
 plt.ion()
-# Import other modules if required
-# Can use other libraries as well
 import xml.etree.ElementTree as ET
 import torchvision.models as models
 import torch.nn as nn
@@ -102,10 +94,7 @@ hyp_momentum = 0.9
 
 ## Build the data
 Use the following links to locally download the data:
-<br/>Training and validation:
-<br/>http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
-<br/>Testing data:
-<br/>http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
+<br/>https://1drv.ms/u/s!AkMf6DxiFnMnvQCWjMMow4hks5Py?e=VAzQCe
 <br/>The dataset consists of images from 20 classes, with detection annotations included. The JPEGImages folder houses the images, and the Annotations folder has the object-wise labels for the objects in one xml file per image. You have to extract the object information, i.e. the [xmin, ymin] (the top left x,y co-ordinates) and the [xmax, ymax] (the bottom right x,y co-ordinates) of only the objects belonging to the three classes(aeroplane, bottle, chair). For parsing the xml file, you can import xml.etree.ElementTree for you. <br/>
 <br/> Organize the data as follows:
 <br/> For every image in the dataset, extract/crop the object patch from the image one by one using their respective co-ordinates:[xmin, ymin, xmax, ymax], resize the image to resnet_input, and store it with its class label information. Do the same for training/validation and test datasets. <br/>
