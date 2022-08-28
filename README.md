@@ -72,12 +72,11 @@ import matplotlib.pyplot as plt
 %matplotlib inline
 plt.ion()
 import xml.etree.ElementTree as ET
-import torchvision.models as models
+from models import *
 import torch.nn as nn
 import torch.optim as optim
 from glob import glob
 import os,sys
-from PIL import Image
 
 # (this is based on a simple Resnet for simplicity, you may experiment with other models)
 resnet_input = 225 # change this for other model
@@ -183,7 +182,7 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 ```python
 device = torch.device("cuda" if torch.cuda.is_available() 
                                   else "cpu")
-model = models.resnet18()
+model = models.resnet10()
 ```
 
 
