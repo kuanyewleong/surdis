@@ -97,7 +97,7 @@ hyp_momentum = 0.9
 Use the following links to locally download the data:
 <br/>https://1drv.ms/u/s!AkMf6DxiFnMnvQCWjMMow4hks5Py?e=VAzQCe
 <br/> Prepare the data as follows (example for Pascal VOC):
-<br/> For every image in the dataset, extract/crop the object patch from the image one by one using their respective co-ordinates:[xmin, ymin, xmax, ymax], resize the image to resnet_input, and store it with its class label information. Do the same for training/validation and test datasets. <br/>
+<br/> For every sample in the dataset, extract/crop the object patch from the depth map one by one using their respective co-ordinates:[xmin, ymin, xmax, ymax], resize the map to resnet_input, and store it with its class label information. Do the same for training/validation and test datasets. <br/>
 
 
 ```python
