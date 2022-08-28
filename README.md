@@ -257,12 +257,6 @@ for curr_epoch in range(num_epochs):
 ```
 
 
-```python
-for curr_epoch in range(num_epochs):
-    train(curr_epoch)
-```
-
-
 # Testing and Accuracy Calculation
 For detection, we adopt a slding window method to test the above trained model:<br/>
 Take some windows of varying size and aspect ratios and slide it through the test image (considering some stride of pixels) from left to right, and top to bottom, detect the class scores for each of the window, and keep only those which are above a certain threshold value. 
@@ -372,7 +366,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), learning_rate, hyp_momentum)
 ```
 
-## Get the Ground Truths Boundary Boxes for Evaluation
+## Get the Ground Truths Bounding Boxes for Evaluation
 
 
 ```python
