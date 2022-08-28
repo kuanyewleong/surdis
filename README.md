@@ -59,8 +59,8 @@ We propose the following usages which are relevant to developing a wearable assi
 - utilizing of the depth map to extract distance information that can be supplied via the feedback mechanism of an assistive tool for blind navigation
 - designing of evaluation system that rates the level of hazard for each class or each instance of surface discontinuity, this can become a hazard alert mechanism for an assistive tool in blind navigation
 
-# Tutorial of Loading Data and Training Models
-### (this is bassed on Resnet-18 for simplicity, you may experiment with other models)
+# Tutorial: Loading Data and Training Models
+### (this is based on Resnet-18 for simplicity, you may experiment with other models)
 
 ```python
 from __future__ import division, print_function, unicode_literals
@@ -80,37 +80,30 @@ from glob import glob
 import os,sys
 from PIL import Image
 
-resnet_input = 225 #size of resnet18 input images
+resnet_input = 225 # change this for other model
 ```
 
 
 ```python
-# Choose your hyper-parameters using validation data
-batch_size = 64
-num_epochs = 5
+# set some hyper-parameters
+batch_size = 128
+num_epochs = 100
 learning_rate =  0.005
 hyp_momentum = 0.9
 ```
 
-## Build the data
+## Getting the data ready
 Use the following links to locally download the data:
 <br/>https://1drv.ms/u/s!AkMf6DxiFnMnvQCWjMMow4hks5Py?e=VAzQCe
-<br/>The dataset consists of images from 20 classes, with detection annotations included. The JPEGImages folder houses the images, and the Annotations folder has the object-wise labels for the objects in one xml file per image. You have to extract the object information, i.e. the [xmin, ymin] (the top left x,y co-ordinates) and the [xmax, ymax] (the bottom right x,y co-ordinates) of only the objects belonging to the three classes(aeroplane, bottle, chair). For parsing the xml file, you can import xml.etree.ElementTree for you. <br/>
-<br/> Organize the data as follows:
+<br/> Prepare the data as follows (example for Pascal VOC):
 <br/> For every image in the dataset, extract/crop the object patch from the image one by one using their respective co-ordinates:[xmin, ymin, xmax, ymax], resize the image to resnet_input, and store it with its class label information. Do the same for training/validation and test datasets. <br/>
-##### Important
-You also have to collect data for an extra background class which stands for the class of an object which is not a part of any of the 20 classes. For this, you can crop and resize any random patches from an image. A good idea is to extract patches that have low "intersection over union" with any object present in the image frame from the 20 Pascal VOC classes. The number of background images should be roughly around those of other class objects' images. Hence the total classes turn out to be four. This is important for applying the sliding window method later.
-
 
 
 ```python
 classes = ('__background__',
-           'aeroplane',
-           'bottle','chair'
+           'down_steps', 'up_steps', 'uncovered_drainage',
+           'uncovered_drainage','mixed_gradient'
            )
-back_classes =  ('bicycle','bird', 'boat', 'bus',
-                 'car', 'cat', 'cow', 'diningtable', 'dog', 'horse',
-                 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor')
 ```
 
 
@@ -121,25 +114,25 @@ back_classes =  ('bicycle','bird', 'boat', 'bus',
 
 
 ```python
-class voc_dataset(torch.utils.data.Dataset): # Extend PyTorch's Dataset class
+class voc_dataset(torch.utils.data.Dataset):
     def __init__(self, root_dir, train, transform=None):
         self.train = train
         self.transforms = transform
         self.data = []
         self.objects = []
-        count_pclass = [0 for i in range(17)]
+        count_pclass = [0 for i in range(5+)]
         
         if(train==True):
-            with open(root_dir + "VOC2007/ImageSets/Main/trainval.txt") as f:
+            with open(root_dir + "annotation_files/PASCAL_VOC/trainset/trainval.txt") as f:
                 for l in f:
                     self.data.append(l.split())
         else:
-            with open(root_dir + "VOC2007/ImageSets/Main/test.txt") as f:
+            with open(root_dir + "annotation_files/PASCAL_VOC/testset/test.txt") as f:
                 for l in f:
                     self.data.append(l.split())
         
         for f in self.data:
-            tree = ET.parse( root_dir + "VOC2007/Annotations/" + f[0] + ".xml")
+            tree = ET.parse( root_dir + "annotation_files/PASCAL_VOC" + f[0] + ".xml")
             filename = tree.find('filename').text
             for obj in tree.findall('object'):
                 obj_struct = {}
@@ -153,7 +146,7 @@ class voc_dataset(torch.utils.data.Dataset): # Extend PyTorch's Dataset class
                                           int(bbox.find('ymax').text)]
                     self.objects.append(obj_struct)
                 
-                
+                ``` # uncomment this only if you are selectively using a few classes, and put the remaining classes here            
                 if(obj.find('name').text in back_classes):
                     if(count_pclass[back_classes.index(obj.find('name').text)] < 100):
                         obj_struct['img_name'] = filename
@@ -165,6 +158,7 @@ class voc_dataset(torch.utils.data.Dataset): # Extend PyTorch's Dataset class
                                               int(bbox.find('xmax').text),
                                               int(bbox.find('ymax').text)]
                         self.objects.append(obj_struct)
+                 ```
                 
         
         
@@ -172,19 +166,19 @@ class voc_dataset(torch.utils.data.Dataset): # Extend PyTorch's Dataset class
         return len(self.objects)
         
     def __getitem__(self, idx):
-        f_name = self.objects[idx]['img_name']
+        f_name = self.objects[idx]['depth_name']
         clss = self.objects[idx]['class']
         if (self.train == True) :
-            image = Image.open('Datasets/Train_VOCdevkit/VOC2007/JPEGImages/' + f_name)
+            depth = torch.from_numpy(np.load(('depth_maps/trainset/' + f_name))
         else:
-            image = Image.open('Datasets/Test_VOCdevkit/VOC2007/JPEGImages/' + f_name)
+            depth = torch.from_numpy(np.load(('depth_maps/testset/' + f_name))
         boundary_box = self. objects[idx]['bbox']
         area = (boundary_box[0], boundary_box[1], boundary_box[2], boundary_box[3])
-        cr_image = image
+        cr_depth = depth
         if self.transforms is not None:
-            cr_image = image.crop(area)
-            cr_image = self.transforms(cr_image)
-        return cr_image, clss
+            cr_depth = depth.crop(area)
+            cr_depth = self.transforms(cr_image)
+        return cr_depth, clss
             
 ```
 
