@@ -79,7 +79,8 @@ import torch.optim as optim
 from glob import glob
 import os,sys
 
-# (this is based on a simple Resnet for simplicity, you may experiment with other models)
+# (this is based on a simple Resnet for simplicity, 
+# you may experiment with other models from the models file)
 resnet_input = 225 # change this for other model
 ```
 
@@ -113,7 +114,7 @@ class voc_dataset(torch.utils.data.Dataset):
         self.transforms = transform
         self.data = []
         self.objects = []
-        count_pclass = [0 for i in range(5+)]
+        count_pclass = [0 for i in range(5)]
         
         if(train==True):
             with open(root_dir + "annotation_files/PASCAL_VOC/trainset/trainval.txt") as f:
@@ -203,10 +204,8 @@ def train(curr_epoch):
     model.train()
     running_loss = 0
     running_corrects = 0
-#     steps =0
+
     for inputs, labels in train_loader:
-#         print(type(inputs), labels)
-#         steps += 1
         inputs, labels = inputs.to(device), labels.to(device)
         optimizer.zero_grad()
         logps = model.forward(inputs)
@@ -263,10 +262,6 @@ for curr_epoch in range(num_epochs):
     train(curr_epoch)
 ```
 
-
-```python
-# %time train()
-```
 
 # Testing and Accuracy Calculation
 For detection, we adopt a slding window method to test the above trained model:<br/>
