@@ -60,7 +60,6 @@ We propose the following usages which are relevant to developing a wearable assi
 - designing of evaluation system that rates the level of hazard for each class or each instance of surface discontinuity, this can become a hazard alert mechanism for an assistive tool in blind navigation
 
 # Tutorial: Loading Data and Training Models
-### (this is based on a simple Resnet for simplicity, you may experiment with other models)
 
 ```python
 from __future__ import division, print_function, unicode_literals
@@ -80,6 +79,7 @@ from glob import glob
 import os,sys
 from PIL import Image
 
+# (this is based on a simple Resnet for simplicity, you may experiment with other models)
 resnet_input = 225 # change this for other model
 ```
 
@@ -138,22 +138,7 @@ class voc_dataset(torch.utils.data.Dataset):
                                           int(bbox.find('xmax').text),
                                           int(bbox.find('ymax').text)]
                     self.objects.append(obj_struct)
-                
-                ``` # uncomment this only if you are selectively using a few classes, and put the remaining classes here            
-                if(obj.find('name').text in back_classes):
-                    if(count_pclass[back_classes.index(obj.find('name').text)] < 100):
-                        obj_struct['img_name'] = filename
-                        obj_struct['class'] = 0
-                        count_pclass[back_classes.index(obj.find('name').text)]  +=1 
-                        bbox = obj.find('bndbox')
-                        obj_struct['bbox'] = [int(bbox.find('xmin').text),
-                                              int(bbox.find('ymin').text),
-                                              int(bbox.find('xmax').text),
-                                              int(bbox.find('ymax').text)]
-                        self.objects.append(obj_struct)
-                 ```
-                
-        
+                    
         
     def __len__(self):
         return len(self.objects)
