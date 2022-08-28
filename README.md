@@ -67,6 +67,7 @@ import numpy as np
 import torch
 import torch.utils.data
 import torchvision.transforms as transforms
+import torch.backends.cudnn as cudnn
 from torch.autograd import Variable
 import matplotlib.pyplot as plt
 %matplotlib inline
@@ -182,7 +183,10 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 ```python
 device = torch.device("cuda" if torch.cuda.is_available() 
                                   else "cpu")
-model = models.resnet10()
+num_class = 5
+model = models.resnet10(num_class)
+model.to(device)
+cudnn.benchmark = True  
 ```
 
 
