@@ -60,7 +60,7 @@ We propose the following usages which are relevant to developing a wearable assi
 - designing of evaluation system that rates the level of hazard for each class or each instance of surface discontinuity, this can become a hazard alert mechanism for an assistive tool in blind navigation
 
 # Tutorial: Loading Data and Training Models
-### (this is based on Resnet-18 for simplicity, you may experiment with other models)
+### (this is based on a simple Resnet for simplicity, you may experiment with other models)
 
 ```python
 from __future__ import division, print_function, unicode_literals
@@ -102,16 +102,9 @@ Use the following links to locally download the data:
 ```python
 classes = ('__background__',
            'down_steps', 'up_steps', 'uncovered_drainage',
-           'uncovered_drainage','mixed_gradient'
+           'drop_off','mixed_gradient'
            )
 ```
-
-
-```python
-# def build_dataset():
-#     # Begin
-```
-
 
 ```python
 class voc_dataset(torch.utils.data.Dataset):
@@ -183,7 +176,8 @@ class voc_dataset(torch.utils.data.Dataset):
 ```
 
 ## Train the netwok
-<br/>You can train the network on the created dataset. This will yield a classification network on the 4 classes of the VOC dataset. 
+<br/>You can now train the network on the prepared dataset from above.
+<br/>First, we do some normalization and then load the data into loader with Torch Dataloader
 
 
 ```python
@@ -194,24 +188,17 @@ transformations = transforms.Compose([
             transforms.RandomResizedCrop(224),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
-train_dataset = voc_dataset(root_dir='Datasets/Train_VOCdevkit/', train=True, transform=transformations) # Supply proper root_dir
+            transforms.Normalize([0.465], [0.291])]) # based on our own calculation
+train_dataset = voc_dataset(root_dir='depth_maps/trainset/', train=True, transform=transformations) # Supply proper root_dir
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 ```
 
-# Fine-tuning
-### Use the pre-trained network to fine-tune the network in the following section:
-
-
-
+### Define model and other training parameters:
 
 ```python
 device = torch.device("cuda" if torch.cuda.is_available() 
                                   else "cpu")
-model = models.resnet18(pretrained=True)
-# for param in model.parameters():
-#     param.requires_grad = False
-model.fc = nn.Linear(model.fc.in_features, 4)
+model = models.resnet18()
 ```
 
 
@@ -224,7 +211,6 @@ optimizer = optim.SGD(model.parameters(), learning_rate, hyp_momentum)
 
 
 ```python
-#One Layer Detection
 def train(curr_epoch):
     model.train()
     running_loss = 0
@@ -291,19 +277,12 @@ for curr_epoch in range(num_epochs):
 
 
 ```python
-# #Two Layer Detection (SSD)
-# def train():
-#     # Begin
-```
-
-
-```python
 # %time train()
 ```
 
 # Testing and Accuracy Calculation
-For applying detection, use a slding window method to test the above trained trained network on the detection task:<br/>
-Take some windows of varying size and aspect ratios and slide it through the test image (considering some stride of pixels) from left to right, and top to bottom, detect the class scores for each of the window, and keep only those which are above a certain threshold value. There is a similar approach used in the paper -Faster RCNN by Ross Girshick, where he uses three diferent scales/sizes and three different aspect ratios, making a total of nine windows per pixel to slide. You need to write the code and use it in testing code to find the predicted boxes and their classes.
+For detection, we adopt a slding window method to test the above trained model:<br/>
+Take some windows of varying size and aspect ratios and slide it through the test image (considering some stride of pixels) from left to right, and top to bottom, detect the class scores for each of the window, and keep only those which are above a certain threshold value. 
 
 
 ```python
@@ -346,7 +325,7 @@ def sliding_window(width,height):
     return valid_boxes
 ```
 
-Apply non_maximum_supression to reduce the number of boxes. You are free to choose the threshold value for non maximum supression, but choose wisely [0,1].
+Apply non_maximum_supression to reduce the number of boxes. You may experiment with the threshold value for non maximum supression between [0,1].
 
 
 ```python
@@ -393,9 +372,8 @@ def non_maximum_supression(boxes,threshold = 0.5):
 
 
 ```python
-# boxes = non_maximum_supression(anchors, 0.3)
 
-trans1 = transforms.ToPILImage()
+# trans1 = transforms.ToPILImage()
 trans = transforms.ToTensor()
 
 device = torch.device("cuda" if torch.cuda.is_available() 
@@ -405,27 +383,27 @@ device = torch.device("cuda" if torch.cuda.is_available()
 
 
 ```python
-model = torch.load('one_layer_model.pth')
+model = torch.load('save_model.pth')
 criterion = nn.CrossEntropyLoss()
 # Update if any errors occur
 optimizer = optim.SGD(model.parameters(), learning_rate, hyp_momentum)
 ```
 
-# Generating Ground Truths Boundary Boxes
+## Get the Ground Truths Boundary Boxes for Evaluation
 
 
 ```python
 data = []
-with open("Datasets/Test_VOCdevkit/" + "VOC2007/ImageSets/Main/test.txt") as f:    
+with open("depth_maps/testset/" + "depth_maps/testset/test.txt") as f:    
     for l in f:
         data.append(l.split())
 
-count_pclass = [0 for i in range(17)]
+count_pclass = [0 for i in range(5)]
 
 ground_truth_boxes = [] 
 for f in data:
     G = []
-    tree = ET.parse( "Datasets/Test_VOCdevkit/" + "VOC2007/Annotations/" + f[0] + ".xml")
+    tree = ET.parse( "depth_maps/testset/" + "annotation_files/PASCAL_VOC/" + f[0] + ".xml")
     filename = tree.find('filename').text
     for obj in tree.findall('object'):
         if(obj.find('name').text in classes):
@@ -460,32 +438,27 @@ for f in data:
 ```python
 Test_dataset = []
 for f in data:
-    im = Image.open('Datasets/Test_VOCdevkit/VOC2007/JPEGImages/' + f[0]+'.jpg')
-    fp = im.fp
-    im.load()
-    fp.closed
-    Test_dataset.append(im)
+    depth = torch.from_numpy(np.load(('depth_maps/testset/' + f[0]+'.npy'))    
+    Test_dataset.append(depth)
 ```
 
 
 ```python
-a = Test_dataset
+a_out = Test_dataset
 ```
 
 
 ```python
 Test_dataset = []
-Test_dataset.append(a[0])
-Test_dataset.append(a[1])
-Test_dataset.append(a[2])
-Test_dataset.append(a[3])
+Test_dataset.append(a_out[0])
+Test_dataset.append(a_out[1])
+Test_dataset.append(a_out[2])
+Test_dataset.append(a_out[3])
 ```
 
 # Test the trained model on the test dataset.
 
-
 ```python
-#One Layer Detection
 def test(model):
     results = []
     for data in Test_dataset:
@@ -504,18 +477,8 @@ def test(model):
             cls = prob.data.cpu().numpy().argmax()
             if(cls!=0):
                 res.append(box)
-#             res.append([cls, prob[cls]])
-#         prob_pclss = [0.3,0.3, 0.3, 0.3]
-#         bbox_pclss = [-1,-1,-1,-1]
-#         for clss in range(4):
-#             for i, r in enumerate(res):
-#                 if(r[0]==clss and r[1]>prob_pclss[clss]):
-#                     prob_pclss[clss] = r[1]
-#                     bbox_pclss[clss] = i
+
         bboxes = non_maximum_supression(np.array(res),0.5)
-#         for i in bbox_pclss:
-#             if(i!=-1):
-#                 bboxes.append(boxes[i])
         results.append(bboxes)
     return results
 ```
@@ -525,54 +488,8 @@ def test(model):
 results = test(model)
 ```
 
-# Plotting boundary boxes
 
-
-```python
-
-import matplotlib.patches as patches
-import random
-def plot_f(bboxes, image): 
-    fig,ax = plt.subplots(1)
-
-    # Display the image
-    ax.imshow(image)
-
-    for boxes[0] in bboxes:
-        rect = patches.Rectangle((boxes[0][1],boxes[0][0]),(boxes[0][3]-boxes[0][1]),(boxes[0][2]-boxes[0][0]),linewidth=1,edgecolor='r',facecolor='none')
-        ax.add_patch(rect)
-
-    plt.show()
-```
-
-
-```python
-plot_f(results[0], Test_dataset[0])
-```
-
-
-![png](output_35_0.png)
-
-
-
-```python
-plot_f(results[1], Test_dataset[1])
-```
-
-
-![png](output_36_0.png)
-
-
-
-```python
-plot_f(results[2], Test_dataset[2])
-```
-
-
-![png](output_37_0.png)
-
-
-# Predicted boundary boxes
+# Predict boundary boxes
 
 
 ```python
@@ -718,20 +635,20 @@ def get_single_image_results(gt_boxes, pred_boxes, iou_thr):
 
 
 ```python
-def calc_precision_recall(img_results):
-    """Calculates precision and recall from the set of images
+def calc_precision_recall(depth_results):
+    """Calculates precision and recall from the set of depth maps
     Args:
-        img_results (dict): dictionary formatted like:
+        depth_results (dict): dictionary formatted like:
             {
-                'img_id1': {'true_pos': int, 'false_pos': int, 'false_neg': int},
-                'img_id2': ...
+                'depth_id1': {'true_pos': int, 'false_pos': int, 'false_neg': int},
+                'depth_id2': ...
                 ...
             }
     Returns:
         tuple: of floats of (precision, recall)
     """
     true_pos = 0; false_pos = 0; false_neg = 0
-    for _, res in img_results.items():
+    for _, res in depth_results.items():
         true_pos += res['true_pos']
         false_pos += res['false_pos']
         false_neg += res['false_neg']
@@ -751,19 +668,19 @@ def calc_precision_recall(img_results):
 
 ```python
 def get_model_scores_map(pred_boxes):
-    """Creates a dictionary of from model_scores to image ids.
+    """Creates a dictionary of from model_scores to depth ids.
     Args:
         pred_boxes (dict): dict of dicts of 'boxes' and 'scores'
     Returns:
         dict: keys are model_scores and values are image ids (usually filenames)
     """
     model_scores_map = {}
-    for img_id, val in pred_boxes.items():
+    for depth_id, val in pred_boxes.items():
         for score in val['scores']:
             if score not in model_scores_map.keys():
-                model_scores_map[score] = [img_id]
+                model_scores_map[score] = [depth_id]
             else:
-                model_scores_map[score].append(img_id)
+                model_scores_map[score].append(depth_id)
     return model_scores_map
 ```
 
@@ -793,41 +710,41 @@ def get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=0.5):
     sorted_model_scores = sorted(model_scores_map.keys())
 
     # Sort the predicted boxes in descending order (lowest scoring boxes first):
-    for img_id in pred_boxes.keys():
-        arg_sort = np.argsort(pred_boxes[img_id]['scores'])
-        pred_boxes[img_id]['scores'] = np.array(pred_boxes[img_id]['scores'])[arg_sort].tolist()
-        pred_boxes[img_id]['boxes'] = np.array(pred_boxes[img_id]['boxes'])[arg_sort].tolist()
+    for depth_id in pred_boxes.keys():
+        arg_sort = np.argsort(pred_boxes[depth_id]['scores'])
+        pred_boxes[depth_id]['scores'] = np.array(pred_boxes[depth_id]['scores'])[arg_sort].tolist()
+        pred_boxes[depth_id]['boxes'] = np.array(pred_boxes[depth_id]['boxes'])[arg_sort].tolist()
 
     pred_boxes_pruned = deepcopy(pred_boxes)
 
     precisions = []
     recalls = []
     model_thrs = []
-    img_results = {}
+    depth_results = {}
     # Loop over model score thresholds and calculate precision, recall
     for ithr, model_score_thr in enumerate(sorted_model_scores[:-1]):
-        # On first iteration, define img_results for the first time:
-        img_ids = gt_boxes.keys() if ithr == 0 else model_scores_map[model_score_thr]
-        for img_id in img_ids:
-            gt_boxes_img = gt_boxes[img_id]
-            box_scores = pred_boxes_pruned[img_id]['scores']
+        # In 1st iter define depth_results for the first time:
+        depth_ids = gt_boxes.keys() if ithr == 0 else model_scores_map[model_score_thr]
+        for depth_id in depth_ids:
+            gt_boxes_depth = gt_boxes[depth_id]
+            box_scores = pred_boxes_pruned[depth_id]['scores']
             start_idx = 0
             for score in box_scores:
                 if score <= model_score_thr:
-                    pred_boxes_pruned[img_id]
+                    pred_boxes_pruned[depth_id]
                     start_idx += 1
                 else:
                     break
 
             # Remove boxes, scores of lower than threshold scores:
-            pred_boxes_pruned[img_id]['scores'] = pred_boxes_pruned[img_id]['scores'][start_idx:]
-            pred_boxes_pruned[img_id]['boxes'] = pred_boxes_pruned[img_id]['boxes'][start_idx:]
+            pred_boxes_pruned[depth_id]['scores'] = pred_boxes_pruned[depth_id]['scores'][start_idx:]
+            pred_boxes_pruned[depth_id]['boxes'] = pred_boxes_pruned[depth_id]['boxes'][start_idx:]
 
-            # Recalculate image results for this image
-            img_results[img_id] = get_single_image_results(
-                gt_boxes_img, pred_boxes_pruned[img_id]['boxes'], iou_thr)
+            # Recalculate results for this depth
+            depth_results[depth_id] = get_single_depth_results(
+                gt_boxes_depth, pred_boxes_pruned[depth_id]['boxes'], iou_thr)
 
-        prec, rec = calc_precision_recall(img_results)
+        prec, rec = calc_precision_recall(depth_results)
         precisions.append(prec)
         recalls.append(rec)
         model_thrs.append(model_score_thr)
@@ -863,7 +780,7 @@ def plot_pr_curve(
 
     if color is None:
         color = COLORS[0]
-    ax.scatter(recalls, precisions, label=label, s=20, color=color)
+    ax.scatter(recalls, precisions, label=label, s=5, color=color)
     ax.set_xlabel('recall')
     ax.set_ylabel('precision')
     ax.set_title('Precision-Recall curve for {}'.format(category))
@@ -908,22 +825,4 @@ for xval in np.linspace(0.0, 1.0, 11):
 end_time = time.time()
 print('\nPlotting and calculating mAP takes {:.4f} secs'.format(end_time - start_time))
 plt.show()
-```
-
-
-```python
-# %time test(resnet18)
-```
-
-
-```python
-# #Two Layer Detection
-# def test(resnet18):
-#     # Write loops for testing the model on the test set
-#     # Also print out the accuracy of the model
-```
-
-
-```python
-# %time test(resnet18)
 ```
