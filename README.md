@@ -423,15 +423,9 @@ Test_dataset = []
 for f in data:
     depth = torch.from_numpy(np.load(('depth_maps/testset/' + f[0]+'.npy'))    
     Test_dataset.append(depth)
-```
 
-
-```python
 a_out = Test_dataset
-```
 
-
-```python
 Test_dataset = []
 Test_dataset.append(a_out[0])
 Test_dataset.append(a_out[1])
@@ -464,18 +458,9 @@ def test(model):
         bboxes = non_maximum_supression(np.array(res),0.5)
         results.append(bboxes)
     return results
-```
 
-
-```python
 results = test(model)
-```
 
-
-# Predict boundary boxes
-
-
-```python
 final_res = []
 for res in results:
     temp = []
@@ -485,7 +470,7 @@ for res in results:
     final_res.append(temp)
 ```
 
-# AP and mAP scores 
+# Evaluation Metrics (AP and mAP)
 
 
 ```python
