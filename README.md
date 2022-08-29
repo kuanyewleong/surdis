@@ -49,8 +49,6 @@ For example, a depth map file in *depth_maps/trainset/depth_1/map_113.npy* is ge
 
 Please refer the example data in repository [example_data](https://github.com/kuanyewleong/surdis/tree/main/example_data) for better understanding. 
 
-# License
-This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us. Refer [this document](https://github.com/kuanyewleong/surdis/blob/main/License.md) for the license.
 
 # Potential Usages
 We propose the following usages which are relevant to developing a wearable assistive technology for the blind and low vision people:
@@ -785,3 +783,6 @@ end_time = time.time()
 print('\nPlotting and calculating mAP takes {:.4f} secs'.format(end_time - start_time))
 plt.show()
 ```
+
+# License
+This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us. Refer [this document](https://github.com/kuanyewleong/surdis/blob/main/License.md) for the license.
