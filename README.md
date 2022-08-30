@@ -18,7 +18,7 @@ In the following figure are some examples of surface discontinuity. Hazardous co
 Based on the physical attributes of the collected data, there are 5 distinctive classes of surface discontinuity: (1) down-steps, (2) up-steps, (3) uncovered drainage, (4) drop-off without handrail, and (5) mixed gradient. 
 
 # Dataset Download Link and File Structure
-Click here to download the dataset: [SurDis](https://1drv.ms/u/s!AkMf6DxiFnMnvQCWjMMow4hks5Py?e=VAzQCe).
+Click here to download the dataset: [SurDis](https://1drv.ms/u/s!AkMf6DxiFnMnvQCU1ve8cJVSqL4G?e=UcFEv4). 
 (Please note that we are currently double-checking the anonymizing task for some of the raw images before the final release of the dataset to Zenodo site with a DOI. Thus, the current location is a temporary solution.)
 
 After decompressing the downloaded folder from the above link, the structure of the dataset will be:
