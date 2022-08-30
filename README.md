@@ -786,3 +786,6 @@ plt.show()
 
 # License
 This work (inclusive the contents on this site and the dataset) is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License and is intended for non-commercial uses. If you are interested in using the dataset for commercial purposes please contact us. Refer [this document](https://github.com/kuanyewleong/surdis/blob/main/License.md) for the license.
+
+# The Team and Maintenance Effort
+This project started as a govenrment funded project and now it has grown to a community-driven project with several skillful engineers and researchers contributing to it. We will put in our best effort to maintain the site and its updates.
