@@ -1,4 +1,15 @@
 # SurDis: A Surface Discontinuity Dataset for Wearable Technology to Assist Blind Navigation in Urban Environments
+
+Please cite this work as:
+@inproceedings{
+leong2022surdis,
+title={SurDis: A Surface Discontinuity Dataset for Wearable Technology to Assist Blind Navigation in Urban Environments},
+author={Kuan Yew Leong and Siew Mooi Lim},
+booktitle={Thirty-sixth Conference on Neural Information Processing Systems Datasets and Benchmarks Track},
+year={2022},
+url={https://openreview.net/forum?id=kQUOIyPg-ux}
+}
+
 ### (Accepted for publication at NeurIPS 2022 Datasets and Benchmarks Track)
 The Surface Discontinuity Dataset contains over 200 sets of depth map sequences and their corresponding stereo image sequences (in bitmap file format to preserve their best resolution) of surface discontinuity along the walkway within Malaysia urbans, captured by our stereo vision prototype for a research study concerning navigation for the blind and low vision people.
 
