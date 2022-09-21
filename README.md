@@ -4,19 +4,12 @@
 Please cite this work as:
 
 > @inproceedings{
-
 > leong2022surdis,
-
 > title={SurDis: A Surface Discontinuity Dataset for Wearable Technology to Assist Blind Navigation in Urban Environments},
-
 > author={Kuan Yew Leong and Siew Mooi Lim},
-
 > booktitle={Thirty-sixth Conference on Neural Information Processing Systems Datasets and Benchmarks Track},
-
 > year={2022},
-
 > url={https://openreview.net/forum?id=kQUOIyPg-ux}
-
 > }
 
 
