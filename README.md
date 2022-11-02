@@ -11,7 +11,7 @@ Please cite this work as:
 > year={2022}, <br />
 > }
 
-[script](https://openreview.net/forum?id=kQUOIyPg-ux)
+[URL to Open Review](https://openreview.net/forum?id=kQUOIyPg-ux)
 
 The Surface Discontinuity Dataset contains over 200 sets of depth map sequences and their corresponding stereo image sequences (in bitmap file format to preserve their best resolution) of surface discontinuity along the walkway within Malaysia urbans, captured by our stereo vision prototype for a research study concerning navigation for the blind and low vision people.
 
